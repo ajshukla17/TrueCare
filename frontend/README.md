@@ -1,29 +1,164 @@
-# React + Vite
+# 🏥 TrueCare — Doctor Appointment Booking System
 
-T
-Currently, two official plugins are available:
+> A full-stack healthcare platform for seamless doctor appointment booking, prescription management, and admin control.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 👨‍⚕️ Patient (Frontend)
 
-## Expanding the ESLint configuration
+* 🔍 Browse doctors
+* 📅 Book appointments
+* 💳 Secure online payment (Razorpay)
+* 📄 View & download prescriptions
+* 🔐 Authentication system
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🩺 Doctor Panel (Admin)
 
+* 📊 Dashboard with analytics
+* 📋 View appointments
+* ✍️ Add / Edit prescriptions
+* ✅ Mark appointments as completed
 
+### ⚙️ Backend
 
+* 🌐 REST API (Node.js + Express)
+* 🗄️ MongoDB database
+* 🔐 JWT Authentication
+* 📧 Email notifications
 
-PDF Download Route
+---
 
-Install: npm install pdfkit
+## 🛠️ Tech Stack
 
+| Layer       | Technology          |
+| ----------- | ------------------- |
+| Frontend    | React.js            |
+| Admin Panel | React.js            |
+| Backend     | Node.js, Express.js |
+| Database    | MongoDB             |
+| Payments    | Razorpay            |
+| Auth        | JWT                 |
 
-🚀 STEP 1: Install Email Package
+---
 
-Go to backend:
+## 📁 Project Structure
 
-npm install nodemailer
+```
+TrueCare/
+│── frontend/   # Patient UI (React)
+│── admin/      # Doctor/Admin Dashboard (React)
+│── backend/    # API Server (Node.js)
+│── README.md
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 🔹 1. Clone the Repository
+
+```bash
+git clone https://github.com/ajshukla17/TrueCare.git
+cd TrueCare
+```
+
+---
+
+### 🔹 2. Setup Backend
+
+```bash
+cd backend
+npm install
+```
+
+#### Create `.env` file in backend:
+
+```
+PORT=5000
+MONGO_URI=your_mongodb_connection
+JWT_SECRET=your_secret
+RAZORPAY_KEY_ID=your_key
+RAZORPAY_KEY_SECRET=your_secret
+EMAIL_USER=your_email
+EMAIL_PASS=your_password
+```
+
+#### Run backend:
+
+```bash
+npm run server
+```
+
+---
+
+### 🔹 3. Setup Frontend
+
+```bash
+cd ../frontend
+npm install
+npm run dev
+```
+
+---
+
+### 🔹 4. Setup Admin Panel
+
+```bash
+cd ../admin
+npm install
+npm run dev
+```
+
+---
+
+## 🌐 Environment Variables
+
+Make sure to add `.env` in **backend folder only** and never push it to GitHub.
+
+---
+
+## 🚀 Deployment
+
+* Frontend → Vercel
+* Admin Panel → Vercel
+* Backend → Render / Railway
+* Database → MongoDB Atlas
+
+---
+
+## 📸 Screenshots (Optional)
+
+*Add screenshots of your UI here*
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+```bash
+fork → clone → create branch → commit → push → PR
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 💡 Author
+
+👤 **Ajitesh Shukla**
+🔗 GitHub: https://github.com/ajshukla17
+
+---
+
+## ⭐ Support
+
+If you like this project, give it a ⭐ on GitHub!
+
+---
