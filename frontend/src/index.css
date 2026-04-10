@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:wght@100;200;300;400;500;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    font-family:Outfit;
+    
+}
+
+/* ── Futuristic UI Utilities ── */
+
+/* Subtle dot-grid overlay */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(95,111,255,0.18) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Glowing orb */
+.glow-orb {
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: orbFloat 8s ease-in-out infinite;
+}
+.glow-orb-2 {
+  border-radius: 50%;
+  filter: blur(100px);
+  animation: orbFloat 10s ease-in-out infinite reverse;
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translateY(0px) scale(1); opacity: 0.5; }
+  50%       { transform: translateY(-24px) scale(1.08); opacity: 0.75; }
+}
+
+/* Gradient text clip */
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #00D4AA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gradient-text-primary {
+  background: linear-gradient(135deg, #5f6FFF 0%, #00D4AA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow box-shadow helpers */
+.glow-primary { box-shadow: 0 0 24px rgba(95,111,255,0.45); }
+.glow-accent  { box-shadow: 0 0 24px rgba(0,212,170,0.4); }
+.glow-card    { box-shadow: 0 0 0 1px rgba(95,111,255,0.2), 0 8px 32px rgba(95,111,255,0.12); }
+.glow-card:hover { box-shadow: 0 0 0 1.5px rgba(95,111,255,0.5), 0 12px 40px rgba(95,111,255,0.22); }
+
+/* Animated availability pulse */
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.7); }
+  60%       { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+}
+.pulse-dot {
+  animation: pulse-dot 1.8s ease-out infinite;
+}
+
+/* Speciality card hover glow */
+.speciality-card:hover {
+  box-shadow: 0 0 0 1.5px rgba(95,111,255,0.5), 0 8px 32px rgba(95,111,255,0.2);
+}
+
+/* Dark hero gradient */
+.hero-gradient {
+  background: linear-gradient(135deg, #0D1117 0%, #131929 50%, #0f1528 100%);
+}
+
+/* CTA gradient button */
+.btn-gradient {
+  background: linear-gradient(135deg, #5f6FFF 0%, #7B2FFF 100%);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+.btn-gradient:hover {
+  box-shadow: 0 0 28px rgba(95,111,255,0.55);
+  transform: translateY(-2px);
+}
+
+/* Accent underline for section headings */
+.section-heading::after {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 3px;
+  background: linear-gradient(90deg, #5f6FFF, #00D4AA);
+  border-radius: 9999px;
+  margin: 10px auto 0;
+}
+
+/* Banner geometric lines */
+.banner-geo {
+  background-image:
+    linear-gradient(135deg, rgba(255,255,255,0.04) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(255,255,255,0.04) 25%, transparent 25%);
+  background-size: 60px 60px;
+}
+
+.active hr{
+    @apply block
+}
+
+::-webkit-scrollbar{
+    @apply hidden
+}
+
+@media (max-width:740px){
+    .active p{
+        @apply text-white bg-primary
+    }
+}

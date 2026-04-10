@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:wght@100;200;300;400;500;700;800;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.input {
+  @apply border border-gray-300 rounded-lg p-3 w-full outline-none focus:border-blue-500 transition;
+}
+
+*{
+    font-family: Outfit;
+}
