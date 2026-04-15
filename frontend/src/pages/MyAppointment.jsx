@@ -9,7 +9,7 @@ function MyAppointment() {
   const [appointments, setAppointments] = useState([]);
   const navigate = useNavigate();
 
-  const months = ["", "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   const slotDateFormat = (slotDate) => {
     const dateArray = slotDate.split("_");
@@ -22,10 +22,10 @@ function MyAppointment() {
         backendurl + "/api/user/appointments",
         { headers: { token } }
       );
-  console.log("API RESPONSE:", data);
+      console.log("API RESPONSE:", data);
       if (data.success) {
         setAppointments(data.appointments.reverse());
-        
+
       }
     } catch (err) {
       toast.error(err.message);
@@ -66,9 +66,15 @@ function MyAppointment() {
           handler: async (response) => {
             await axios.post(
               backendurl + "/api/user/verify-razorpay",
-              response,
+              {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                appointmentId: appointmentId   // 🔥 IMPORTANT
+              },
               { headers: { token } }
             );
+
             getUserAppointment();
           },
         });
@@ -181,7 +187,7 @@ function MyAppointment() {
                   onClick={() =>
                     window.open(
                       backendurl +
-                        `/api/prescription/download/${item.prescriptionId._id}`
+                      `/api/prescription/download/${item.prescriptionId._id}`
                     )
                   }
                   className="px-4 py-2 rounded-lg border text-blue-600 hover:bg-blue-600 hover:text-white text-sm transition"
