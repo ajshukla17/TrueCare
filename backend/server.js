@@ -15,13 +15,16 @@ import Route from "./routes/ai.route.js";
 
 //app config
 const app =express()
-const Port =3000
+const Port = process.env.PORT || 3000
 connectDB()
 connectCloudinary()
 
 //middleware
 app.use(express.json())
-app.use(cors()) //backend to frontend connection
+app.use(cors({
+  origin: "*",
+  credentials: true
+}));
 
 //api endpoint
 app.use('/api/admin',adminRouter)
@@ -35,6 +38,6 @@ app.get('/',(req,res)=>{
 
 
 
-app.listen(Port ,()=>{
+app.listen(Port  ,()=>{
     console.log("port connected",Port);
 })
