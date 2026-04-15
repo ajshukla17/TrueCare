@@ -10,6 +10,7 @@ import doctorModel from '../models/doctor.model.js'
 import appointmentModel from '../models/appointment.model.js'
 import razorpay from 'razorpay'
 import { sendAppointmentEmail } from "../utils/sendEmail.js";
+import crypto from "crypto";
 
 //api to register user
 
@@ -320,70 +321,77 @@ const paymentRazorpay = async (req, res) => {
 // ===============================
 // ✅ VERIFY PAYMENT + SEND EMAIL
 // ===============================
+
+
 const verifyRazorpay = async (req, res) => {
-    try {
-        const { razorpay_order_id } = req.body;
+  try {
+    const {
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+      appointmentId
+    } = req.body;
 
-        // fetch order details
-        const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id);
+    // 🔐 Create signature
+    const body = razorpay_order_id + "|" + razorpay_payment_id;
 
-        if (orderInfo.status === "paid") {
+    const expectedSignature = crypto
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+      .update(body.toString())
+      .digest("hex");
 
-            // ✅ update appointment payment status
-            const appointment = await appointmentModel.findByIdAndUpdate(
-                orderInfo.receipt,
-                { payment: true },
-                { new: true }
-            );
+    // ✅ Verify signature
+    if (expectedSignature === razorpay_signature) {
 
-            if (!appointment) {
-                return res.json({
-                    success: false,
-                    message: "Appointment not found",
-                });
-            }
+      // ✅ update appointment
+      const appointment = await appointmentModel.findByIdAndUpdate(
+        appointmentId,
+        { payment: true },
+        { new: true }
+      );
 
-            // ✅ get user & doctor
-            const user = await userModel.findById(appointment.userId);
-            const doctor = await doctorModel.findById(appointment.docId);
+      if (!appointment) {
+        return res.json({
+          success: false,
+          message: "Appointment not found",
+        });
+      }
 
-            if (!user || !doctor) {
-                return res.json({
-                    success: false,
-                    message: "User or Doctor not found",
-                });
-            }
+      // ✅ get user & doctor
+      const user = await userModel.findById(appointment.userId);
+      const doctor = await doctorModel.findById(appointment.docId);
 
-            console.log("📧 Sending email after payment to:", user.email);
+      if (!user || !doctor) {
+        return res.json({
+          success: false,
+          message: "User or Doctor not found",
+        });
+      }
 
-            // ===============================
-            // 📧 SEND EMAIL AFTER PAYMENT
-            // ===============================
-            await sendAppointmentEmail(user.email, {
-                doctorName: doctor.name,
-                date: appointment.slotDate,
-                time: appointment.slotTime,
-                fees: appointment.amount,
-            });
+      // 📧 send email
+      await sendAppointmentEmail(user.email, {
+        doctorName: doctor.name,
+        date: appointment.slotDate,
+        time: appointment.slotTime,
+        fees: appointment.amount,
+      });
 
-            console.log("✅ Email sent successfully after payment");
+      return res.json({
+        success: true,
+        message: "Payment Successful",
+      });
 
-            res.json({
-                success: true,
-                message: "Payment Successful & Email Sent",
-            });
-
-        } else {
-            res.json({
-                success: false,
-                message: "Payment Failed",
-            });
-        }
-
-    } catch (error) {
-        console.log("VERIFY ERROR:", error);
-        res.json({ success: false, message: error.message });
+    } else {
+      return res.json({
+        success: false,
+        message: "Invalid signature",
+      });
     }
+
+  } catch (error) {
+    console.log("VERIFY ERROR:", error);
+    res.json({ success: false, message: error.message });
+  }
 };
 
 
