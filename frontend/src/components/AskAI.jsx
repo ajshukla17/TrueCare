@@ -54,7 +54,7 @@ const AskAI = () => {
     setInput("");
 
     try {
-      const res = await axios.post("http://localhost:3000/api/ai/ask-ai", {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/ai/ask-ai`, {
         message: input,
       });
       setMessages((prev) => [...prev, { type: "bot", text: res.data.reply }]);
