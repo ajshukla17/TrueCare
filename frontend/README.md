@@ -121,10 +121,10 @@ Make sure to add `.env` in **backend folder only** and never push it to GitHub.
 
 ## 🚀 Deployment
 
-* Frontend → Vercel
-* Admin Panel → Vercel
-* Backend → Render / Railway
-* Database → MongoDB Atlas
+* Frontend → Vercel -https://truecare-frontend-one.vercel.app/
+* Admin Panel → Vercel - https://truecare-admin.vercel.app/
+* Backend → Render / Railway - https://truecare-backend.onrender.com/
+* Database → MongoDB Atlas 
 
 ---
 
@@ -154,6 +154,8 @@ This project is licensed under the MIT License.
 
 👤 **Ajitesh Shukla**
 🔗 GitHub: https://github.com/ajshukla17
+
+
 
 ---
 
