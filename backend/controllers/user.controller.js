@@ -108,28 +108,48 @@ const updateProfile = async (req, res) => {
         const userId = req.user.id
         const { name, phone, address, dob, gender } = req.body
         const imageFile = req.file
-        console.log("BODY:", req.body);
-        console.log("FILE:", req.file);
-        console.log("USER:", req.user);
 
-
+       
         if (!name || !phone || !address || !dob) {
             return res.json({ success: false, message: "missing details" })
         }
-        await userModel.findByIdAndUpdate(userId, { name, phone, address: JSON.parse(address), dob, gender :gender || "" })
+
+        // ✅ Parse address safely
+        let parsedAddress;
+        try {
+            parsedAddress = JSON.parse(address);
+        } catch (e) {
+            return res.json({ success: false, message: "Invalid address format" });
+        }
+
+        // ✅ Single update call with all fields including image
+        const updateData = {
+            name,
+            phone,
+            address: parsedAddress,
+            dob,
+            gender: gender || ""
+        }
 
         if (imageFile) {
             const imageUpload = await cloudinary.uploader.upload(imageFile.path, { resource_type: "image" })
-            const imageUrl = imageUpload.secure_url
-            await userModel.findByIdAndUpdate(userId, { image: imageUrl })
+            updateData.image = imageUpload.secure_url
         }
+
+        // ✅ { new: true } returns updated doc, { runValidators: false } skips enum check
+        const updatedUser = await userModel.findByIdAndUpdate(
+            userId,
+            updateData,
+            { new: true, runValidators: false }
+        )
+
+        console.log("Updated user gender in DB:", updatedUser.gender);
 
         res.json({ success: true, message: "Profile updated successfully" })
 
-
-    }
-    catch (error) {
-        res.json({ success: false, message: "coming from updateProfile fnc" })
+    } catch (error) {
+        console.log("updateProfile error:", error.message)
+        res.json({ success: false, message: error.message })
     }
 }
 

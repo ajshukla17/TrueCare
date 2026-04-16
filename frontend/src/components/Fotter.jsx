@@ -17,7 +17,7 @@ function Fotter() {
                         <li>Home</li>
                         <li>About Us</li>
                         <li>Contact Us</li>
-                        <li>Privacy Pokicy</li>
+                        <li>Privacy Policy</li>
                     </ul>
 
                 </div>
