@@ -1,11 +1,13 @@
 import { transporter } from "../config/email.js";
 
 export const sendAppointmentEmail = async (userEmail, data) => {
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: userEmail,
-    subject: "Appointment Confirmation 🏥",
-    html: `
+  try {
+    const mailOptions = {
+
+      from: process.env.EMAIL_USER,
+      to: userEmail,
+      subject: "Appointment Confirmation 🏥",
+      html: `
 <div style="font-family: 'Segoe UI', Arial, sans-serif; background:#f4f6f8; padding:20px;">
   
   <div style="max-width:500px; margin:auto; background:white; border-radius:12px; padding:25px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
@@ -45,9 +47,12 @@ export const sendAppointmentEmail = async (userEmail, data) => {
   </div>
 </div>
 `,
+    };
 
-  };
-
-  await transporter.sendMail(mailOptions);
-  console.log("📨 Email function triggered");
+    await transporter.sendMail(mailOptions);
+    console.log("📨 Email function triggered");
+  }
+  catch (error){
+    console.log("❌ Email send error:", error.message);
+  }
 };
