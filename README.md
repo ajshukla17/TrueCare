@@ -121,7 +121,7 @@ Make sure to add `.env` in **backend folder only** and never push it to GitHub.
 
 ## 🚀 Deployment
 
-* Frontend → Vercel -https://truecare-frontend-one.vercel.app/
+* Frontend → Vercel -https://truecarehealthtech.vercel.app/
 * Admin Panel → Vercel - https://truecare-admin.vercel.app/
 * Backend → Render / Railway - https://truecare-backend.onrender.com/
 * Database → MongoDB Atlas 
