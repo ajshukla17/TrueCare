@@ -58,8 +58,9 @@ function MyAppointment() {
       );
 
       if (data.success) {
+        const keyId = import.meta.env.VITE_RAZORPAY_KEY_ID?.replace(/"/g, "");
         const rzp = new window.Razorpay({
-          key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+          key: keyId,
           amount: data.order.amount,
           currency: data.order.currency,
           order_id: data.order.id,
