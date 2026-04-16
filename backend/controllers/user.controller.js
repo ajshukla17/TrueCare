@@ -113,10 +113,10 @@ const updateProfile = async (req, res) => {
         console.log("USER:", req.user);
 
 
-        if (!name || !phone || !address || !dob || !gender) {
+        if (!name || !phone || !address || !dob) {
             return res.json({ success: false, message: "missing details" })
         }
-        await userModel.findByIdAndUpdate(userId, { name, phone, address: JSON.parse(address), dob, gender })
+        await userModel.findByIdAndUpdate(userId, { name, phone, address: JSON.parse(address), dob, gender :gender || "" })
 
         if (imageFile) {
             const imageUpload = await cloudinary.uploader.upload(imageFile.path, { resource_type: "image" })
@@ -278,7 +278,7 @@ const razorpayInstance = new razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
     key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
- console.log("KEY_ID:", process.env.RAZORPAY_KEY_ID);
+console.log("KEY_ID:", process.env.RAZORPAY_KEY_ID);
 console.log("KEY_SECRET:", process.env.RAZORPAY_KEY_SECRET);
 
 
@@ -286,72 +286,72 @@ console.log("KEY_SECRET:", process.env.RAZORPAY_KEY_SECRET);
 // 💳 CREATE PAYMENT ORDER
 // ===============================
 const paymentRazorpay = async (req, res) => {
-  try {
-    const { appointmentId } = req.body;
+    try {
+        const { appointmentId } = req.body;
 
-    const appointmentData =
-      await appointmentModel.findById(
-        appointmentId
-      );
+        const appointmentData =
+            await appointmentModel.findById(
+                appointmentId
+            );
 
-    if (
-      !appointmentData ||
-      appointmentData.cancelled
-    ) {
-      return res.json({
-        success: false,
-        message:
-          "Appointment cancelled or not found",
-      });
+        if (
+            !appointmentData ||
+            appointmentData.cancelled
+        ) {
+            return res.json({
+                success: false,
+                message:
+                    "Appointment cancelled or not found",
+            });
+        }
+
+        // ✅ base amount
+        let finalAmount =
+            appointmentData.amount;
+
+        // ✅ double payment for emergency
+        if (appointmentData.isEmergency) {
+            finalAmount =
+                appointmentData.amount * 2;
+        }
+
+        const options = {
+            amount: finalAmount * 100, // paise
+            currency:
+                process.env.CURRENCY ||
+                "INR",
+            receipt: appointmentId,
+        };
+
+        const order =
+            await razorpayInstance.orders.create(
+                options
+            );
+
+        // optional: save payable amount
+        appointmentData.amount =
+            finalAmount;
+
+        await appointmentData.save();
+
+        return res.json({
+            success: true,
+            order,
+            payableAmount: finalAmount,
+            isEmergency:
+                appointmentData.isEmergency,
+        });
+    } catch (error) {
+        console.log(
+            "PAYMENT ERROR:",
+            error
+        );
+
+        return res.json({
+            success: false,
+            message: error.message,
+        });
     }
-
-    // ✅ base amount
-    let finalAmount =
-      appointmentData.amount;
-
-    // ✅ double payment for emergency
-    if (appointmentData.isEmergency) {
-      finalAmount =
-        appointmentData.amount * 2;
-    }
-
-    const options = {
-      amount: finalAmount * 100, // paise
-      currency:
-        process.env.CURRENCY ||
-        "INR",
-      receipt: appointmentId,
-    };
-
-    const order =
-      await razorpayInstance.orders.create(
-        options
-      );
-
-    // optional: save payable amount
-    appointmentData.amount =
-      finalAmount;
-
-    await appointmentData.save();
-
-    return res.json({
-      success: true,
-      order,
-      payableAmount: finalAmount,
-      isEmergency:
-        appointmentData.isEmergency,
-    });
-  } catch (error) {
-    console.log(
-      "PAYMENT ERROR:",
-      error
-    );
-
-    return res.json({
-      success: false,
-      message: error.message,
-    });
-  }
 };
 
 
@@ -363,103 +363,103 @@ const paymentRazorpay = async (req, res) => {
 
 
 const verifyRazorpay = async (req, res) => {
-  try {
-    const {
-      razorpay_order_id,
-      razorpay_payment_id,
-      razorpay_signature,
-      appointmentId,
-    } = req.body;
-
-    console.log("verify api called");
-
-    const body =
-      razorpay_order_id + "|" + razorpay_payment_id;
-
-    const expectedSignature = crypto
-      .createHmac(
-        "sha256",
-        process.env.RAZORPAY_KEY_SECRET
-      )
-      .update(body)
-      .digest("hex");
-
-    if (
-      expectedSignature !== razorpay_signature
-    ) {
-      return res.json({
-        success: false,
-        message: "Invalid Signature",
-      });
-    }
-
-    const appointment =
-      await appointmentModel.findByIdAndUpdate(
-        appointmentId,
-        { payment: true },
-        { new: true }
-      );
-
-    if (!appointment) {
-      return res.json({
-        success: false,
-        message: "Appointment not found",
-      });
-    }
-
-    const user = await userModel.findById(
-      appointment.userId
-    );
-
-    const doctor =
-      await doctorModel.findById(
-        appointment.docId
-      );
-
-    if (!user || !doctor) {
-      return res.json({
-        success: false,
-        message: "User/Doctor not found",
-      });
-    }
-
-    console.log("Sending mail to:", user.email);
-
-    // email separately handled
     try {
-      await sendAppointmentEmail(
-        user.email,
-        {
-          doctorName: doctor.name,
-          date: appointment.slotDate,
-          time: appointment.slotTime,
-          fees: appointment.amount,
+        const {
+            razorpay_order_id,
+            razorpay_payment_id,
+            razorpay_signature,
+            appointmentId,
+        } = req.body;
+
+        console.log("verify api called");
+
+        const body =
+            razorpay_order_id + "|" + razorpay_payment_id;
+
+        const expectedSignature = crypto
+            .createHmac(
+                "sha256",
+                process.env.RAZORPAY_KEY_SECRET
+            )
+            .update(body)
+            .digest("hex");
+
+        if (
+            expectedSignature !== razorpay_signature
+        ) {
+            return res.json({
+                success: false,
+                message: "Invalid Signature",
+            });
         }
-      );
 
-      console.log("Email sent");
-    } catch (mailError) {
-      console.log(
-        "MAIL ERROR:",
-        mailError.message
-      );
+        const appointment =
+            await appointmentModel.findByIdAndUpdate(
+                appointmentId,
+                { payment: true },
+                { new: true }
+            );
+
+        if (!appointment) {
+            return res.json({
+                success: false,
+                message: "Appointment not found",
+            });
+        }
+
+        const user = await userModel.findById(
+            appointment.userId
+        );
+
+        const doctor =
+            await doctorModel.findById(
+                appointment.docId
+            );
+
+        if (!user || !doctor) {
+            return res.json({
+                success: false,
+                message: "User/Doctor not found",
+            });
+        }
+
+        console.log("Sending mail to:", user.email);
+
+        // email separately handled
+        try {
+            await sendAppointmentEmail(
+                user.email,
+                {
+                    doctorName: doctor.name,
+                    date: appointment.slotDate,
+                    time: appointment.slotTime,
+                    fees: appointment.amount,
+                }
+            );
+
+            console.log("Email sent");
+        } catch (mailError) {
+            console.log(
+                "MAIL ERROR:",
+                mailError.message
+            );
+        }
+
+        return res.json({
+            success: true,
+            message: "Payment Successful",
+        });
+    } catch (error) {
+        console.log(
+            "VERIFY ERROR:",
+            error.message
+        );
+
+        return res.json({
+            success: false,
+            message: error.message,
+        });
     }
-
-    return res.json({
-      success: true,
-      message: "Payment Successful",
-    });
-  } catch (error) {
-    console.log(
-      "VERIFY ERROR:",
-      error.message
-    );
-
-    return res.json({
-      success: false,
-      message: error.message,
-    });
-  }
 };
 
 

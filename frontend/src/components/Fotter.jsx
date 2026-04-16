@@ -34,7 +34,7 @@ function Fotter() {
             <div>
                 {/* copyrigth */}
                 <hr />
-                <p className="py-5 text-sm text-center">Copyright © 2025 Ajitesh Shukla - All Right Reserved.</p>
+                <p className="py-5 text-sm text-center">Copyright © 2026 Ajitesh Shukla- TrueCare - All Right Reserved.</p>
             </div>
 
         </div>
