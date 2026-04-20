@@ -131,16 +131,19 @@ function AddDoctor() {
                     <div>
                         <p className="text-sm font-medium text-slate-700 mb-2">Experience</p>
                         <select onChange={(e)=>setExperience(e.target.value)} value={experience} name="" className="w-full px-4 py-3 text-base border-2 border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-white cursor-pointer transition-all">
-                            <option value="1 Year">1 Year</option>
-                            <option value="2 Year">2 Year</option>
-                            <option value="3 Year">3 Year</option>
-                            <option value="4 Year">4 Year</option>
-                            <option value="5 Year">5 Year</option>
-                            <option value="6 Year">6 Year</option>
-                            <option value="7 Year">7 Year</option>
-                            <option value="8 Year">8 Year</option>
-                            <option value="9 Year">9 Year</option>
-                            <option value="10 Year">10 Year</option>
+                            <option value="1 Year">1+ Year</option>
+                            <option value="2 Year">5+ Year</option>
+                            <option value="10 Year">10+ Year</option>
+                            <option value="10 Year">15+ Year</option>
+                            <option value="10 Year">20+ Year</option>
+                            <option value="21 Year">25+ Year</option>
+                            <option value="21 Year">30+ Year</option>
+                            <option value="21 Year">35+ Year</option>
+                            <option value="21 Year">40+ Year</option>
+                            <option value="21 Year">45+ Year</option>
+                            <option value="21 Year">50+ Year</option>
+                            <option value="21 Year">55+ Year</option>
+                           
                         </select>
                     </div>
                     <div>
