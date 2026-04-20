@@ -180,7 +180,7 @@ function Appointment() {
                         <p className="text-lg font-bold text-blue-600">
                             {currenySym}
                             {isEmergency
-                                ? (docInfo.emergencyFee || docInfo.fees * 2)
+                                ? (docInfo.emergencyFee || docInfo.fees ) // tha fees ke agge *2
                                 : docInfo.fees}
                         </p>
                     </div>
