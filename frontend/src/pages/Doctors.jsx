@@ -3,12 +3,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
 const SPECIALITIES = [
-  { label: "General Physician", value: "General physician" },
+  { label: "General Physician", value: "General Physician" },
   { label: "Gynecologist", value: "Gynecologist" },
   { label: "Dermatologist", value: "Dermatologist" },
   { label: "Pediatricians", value: "Pediatricians" },
   { label: "Neurologist", value: "Neurologist" },
   { label: "Gastroenterologist", value: "Gastroenterologist" },
+  { label: "Cardiologist", value: "Cardiologist" },
+  { label: "Orthopedic", value: "Orthopedic" },
+  { label: "ENT Specialist", value: "ENT Specialist" },
+  { label: "Pulmonologist", value: "Pulmonologist" },
 ];
 
 function Doctors() {
