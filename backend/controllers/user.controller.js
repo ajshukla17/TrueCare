@@ -309,71 +309,41 @@ const paymentRazorpay = async (req, res) => {
     try {
         const { appointmentId } = req.body;
 
-        const appointmentData =
-            await appointmentModel.findById(
-                appointmentId
-            );
+        const appointmentData = await appointmentModel.findById(appointmentId);
 
-        if (
-            !appointmentData ||
-            appointmentData.cancelled
-        ) {
+        if (!appointmentData || appointmentData.cancelled) {
             return res.json({
                 success: false,
-                message:
-                    "Appointment cancelled or not found",
+                message: "Appointment cancelled or not found",
             });
         }
 
-        // ✅ base amount
-        let finalAmount =
-            appointmentData.amount;
-
-        // ✅ double payment for emergency
-        if (appointmentData.isEmergency) {
-            finalAmount =
-                appointmentData.amount * 2;
-        }
+        // ✅ amount is already correct (emergency fee handled at booking time)
+        const finalAmount = appointmentData.amount;
 
         const options = {
-            amount: finalAmount * 100, // paise
-            currency:
-                process.env.CURRENCY ||
-                "INR",
+            amount: finalAmount * 100, // convert to paise
+            currency: process.env.CURRENCY || "INR",
             receipt: appointmentId,
         };
 
-        const order =
-            await razorpayInstance.orders.create(
-                options
-            );
-
-        // optional: save payable amount
-        appointmentData.amount =
-            finalAmount;
-
-        await appointmentData.save();
+        const order = await razorpayInstance.orders.create(options);
 
         return res.json({
             success: true,
             order,
             payableAmount: finalAmount,
-            isEmergency:
-                appointmentData.isEmergency,
+            isEmergency: appointmentData.isEmergency,
         });
-    } catch (error) {
-        console.log(
-            "PAYMENT ERROR:",
-            error
-        );
 
+    } catch (error) {
+        console.log("PAYMENT ERROR:", error);
         return res.json({
             success: false,
             message: error.message,
         });
     }
 };
-
 
 
 // ===============================
