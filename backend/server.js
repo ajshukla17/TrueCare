@@ -22,7 +22,7 @@ connectCloudinary()
 //middleware
 app.use(express.json())
 app.use(cors({
-  origin: [process.env.FRONTEND_URL, process.env.ADMIN_URL],
+  origin: "*",
   credentials: true
 }));
 
@@ -39,5 +39,5 @@ app.get('/',(req,res)=>{
 
 
 app.listen(Port  ,()=>{
-    
+    console.log("port connected",Port);console
 })
