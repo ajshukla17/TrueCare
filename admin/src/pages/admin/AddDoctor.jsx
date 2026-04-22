@@ -43,11 +43,11 @@ function AddDoctor() {
             
             //clg formdata
             formData.forEach((value,key)=>{
-                console.log(`${key} : ${value}`);
+             
             })
 
             const {data} = await axios.post(backendurl + '/api/admin/add-doctor' , formData , {headers:{ atoken }})
-            console.log(data);
+           
             if (data.success) {
                 toast.success(data.message)
                 setDocImg(false)
@@ -66,7 +66,7 @@ function AddDoctor() {
 
         }catch(err){
             toast.error(err.message)
-            console.log(err);
+       
             
 
         }

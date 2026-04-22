@@ -17,14 +17,14 @@ const DoctorContextProvider = (props) => {
 
             if (data.success) {
                 setAppointments(data.appointments.reverse())
-                console.log(data.appointments.reverse());
+          
             } else {
                 toast.error(data.message)
             }
 
         }
         catch (error) {
-            console.log(error);
+         
             toast.error(error.message)
 
         }

@@ -47,7 +47,7 @@ const AppContextProvider = (props) => {
             }
 
         } catch (error) {
-            console.log(error, "getDRdata se error hai");
+           
             toast.error(error.message)
         }
     }

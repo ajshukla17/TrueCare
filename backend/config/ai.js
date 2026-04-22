@@ -37,7 +37,7 @@ Give simple advice and suggest doctor type.`,
       return response.data.choices[0].message.content;
 
     } catch (error) {
-      console.log(`Model failed: ${model}`);
+      
     }
   }
 

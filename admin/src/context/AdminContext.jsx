@@ -15,14 +15,14 @@ const AdminContextProvider = (props) =>{
 
 
     const backendurl = import.meta.env.VITE_BACKEND_URL
-    console.log(backendurl);
+   
 
     const getAllDoctors = async () =>{
         try {
             const {data} = await axios.post(backendurl + "/api/admin/all-doctors" , {} ,{headers:{atoken}})
             if(data.success){
                 setDoctors(data.doctors)
-                console.log(data.doctors);
+                
             }
             else{
                 toast.error(data.message)
@@ -37,11 +37,11 @@ const AdminContextProvider = (props) =>{
     const changeAvailability  =async (docId) =>{
         try {
             const {data} =await axios.post( backendurl + '/api/admin/change-availability' ,{docId} ,{headers:{atoken}})
-            console.log(data);
+           
             if(data.success){
          
                 toast.success("available updated")
-                console.log(data.doctors);
+                
                 getAllDoctors()
             }else{
                 toast.error(data.message)
@@ -57,7 +57,7 @@ const AdminContextProvider = (props) =>{
             const {data} = await axios.get(backendurl+'/api/admin/appointments' ,{headers:{atoken}})
             if(data.success){
                 setAppointments(data.appointments)
-                console.log(data.appointments);
+            
             }else{
                 toast.error(data.message)
             }
@@ -88,7 +88,7 @@ const AdminContextProvider = (props) =>{
 
             if(data.success){
                 setDashData(data.dashData)
-                console.log(data.dashData);
+           
 
             }else{
                 toast.error(data.message)

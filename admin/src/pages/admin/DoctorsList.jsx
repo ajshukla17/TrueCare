@@ -61,7 +61,7 @@ function DoctorsList() {
       }
 
     } catch (err) {
-      console.log(err);
+     
       toast.error("Something went wrong ❌");
     }
   };

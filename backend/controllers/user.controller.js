@@ -143,12 +143,12 @@ const updateProfile = async (req, res) => {
             { new: true, runValidators: false }
         )
 
-        console.log("Updated user gender in DB:", updatedUser.gender);
+       
 
         res.json({ success: true, message: "Profile updated successfully" })
 
     } catch (error) {
-        console.log("updateProfile error:", error.message)
+       
         res.json({ success: false, message: error.message })
     }
 }
@@ -247,7 +247,7 @@ const bookAppointement = async (req, res) => {
         });
 
     } catch (error) {
-        console.log("BOOK APPOINTMENT ERROR:", error);
+       
         res.json({ success: false, message: error.message });
     }
 };
@@ -286,7 +286,7 @@ const cancelAppointment = async (req, res) => {
         res.json({ success: true, message: "Appointment cancelled successfully" });
 
     } catch (error) {
-        console.log(error);
+    
         res.json({ success: false, message: error.message });
 
     }
@@ -298,8 +298,7 @@ const razorpayInstance = new razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
     key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
-console.log("KEY_ID:", process.env.RAZORPAY_KEY_ID);
-console.log("KEY_SECRET:", process.env.RAZORPAY_KEY_SECRET);
+
 
 
 // ===============================
@@ -337,7 +336,7 @@ const paymentRazorpay = async (req, res) => {
         });
 
     } catch (error) {
-        console.log("PAYMENT ERROR:", error);
+    
         return res.json({
             success: false,
             message: error.message,
@@ -413,7 +412,7 @@ const verifyRazorpay = async (req, res) => {
             });
         }
 
-        console.log("Sending mail to:", user.email);
+      
 
         // email separately handled
         try {

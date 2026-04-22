@@ -41,7 +41,7 @@ export const getUserPrescriptions = async (req, res) => {
     const prescriptions = await Prescription.find({
       patientId: userId,
     }).populate("doctorId", "name speciality");
-    console.log("User from token:", req.user);
+   
     res.json({ success: true, prescriptions });
 
   } catch (error) {

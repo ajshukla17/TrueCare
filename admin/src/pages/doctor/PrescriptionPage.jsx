@@ -53,7 +53,7 @@ function PrescriptionPage() {
         setSubmitting(false);
       }
     } catch (err) {
-      console.log(err);
+     
       toast.error("Something went wrong ❌");
       setSubmitting(false);
     }

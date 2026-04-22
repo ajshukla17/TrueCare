@@ -50,7 +50,7 @@ export const sendAppointmentEmail = async (userEmail, data) => {
     };
 
     await transporter.sendMail(mailOptions);
-    console.log("📨 Email function triggered");
+  
   }
   catch (error){
     console.log("❌ Email send error:", error.message);

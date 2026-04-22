@@ -22,7 +22,7 @@ function MyAppointment() {
         backendurl + "/api/user/appointments",
         { headers: { token } }
       );
-      console.log("API RESPONSE:", data);
+    
       if (data.success) {
         setAppointments(data.appointments.reverse());
 
