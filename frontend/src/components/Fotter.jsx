@@ -27,14 +27,14 @@ function Fotter() {
                     <p className="text-xl font-medium mb-5" >GET IN TOUCH</p>
                     <ul className="flex flex-col gap-2 text-gray-600">
                         <li><a href="tel:6394122075">Call Us: 6394122075</a></li>
-                        <li> <a href="mailto:ajshukla179@gmail.com">Mail Us: ajshukla179@gmail.com</a></li>
+                        <li> <a href="mailto:truecareinfotechpvtltd@gmail.com">Mail Us: truecareinfotechpvtltd@gmail.com</a></li>
                     </ul>
                 </div>
             </div>
             <div>
                 {/* copyrigth */}
                 <hr />
-                <p className="py-5 text-sm text-center">Copyright © 2026 Ajitesh Shukla- TrueCare - All Right Reserved.</p>
+                <p className="py-5 text-sm text-center">Copyright © 2026 trueCare Infotech PVT. LTD - All Right Reserved.</p>
             </div>
 
         </div>

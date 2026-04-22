@@ -45,10 +45,10 @@ function Contact() {
           <div className="bg-white shadow-md rounded-xl p-5 border">
             <h3 className="font-semibold text-gray-700 mb-1">📧 Email</h3>
             <a
-              href="mailto:ajshukla179@gmail.com"
+              href="mailto:truecareinfotechpvtltd@gmail.com"
               className="text-blue-600 text-sm"
             >
-              ajshukla179@gmail.com
+              truecareinfotechpvtltd@gmail.com
             </a>
           </div>
 
