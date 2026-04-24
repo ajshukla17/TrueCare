@@ -11,6 +11,7 @@
 
 /* ── Futuristic UI Utilities ── */
 
+
 /* Subtle dot-grid overlay */
 .dot-grid {
   background-image: radial-gradient(circle, rgba(95,111,255,0.18) 1px, transparent 1px);
@@ -114,4 +115,94 @@
     .active p{
         @apply text-white bg-primary
     }
+}
+
+/* ── Light theme (default) ── */
+:root, [data-theme="light"] {
+  --bg-primary:    #ffffff;
+  --bg-secondary:  #f8fafd;
+  --bg-tertiary:   #f1f5f9;
+  --text-primary:  #0c1f3d;
+  --text-secondary:#536480;
+  --text-muted:    #94a3b8;
+  --border:        rgba(14,35,75,0.10);
+  --border-strong: rgba(14,35,75,0.16);
+  --card-bg:       #ffffff;
+  --shadow:        0 2px 16px rgba(12,31,61,0.07);
+  --input-bg:      #ffffff;
+}
+
+/* ── Dark theme ── */
+[data-theme="dark"] {
+  --bg-primary:    #0f172a;
+  --bg-secondary:  #1e293b;
+  --bg-tertiary:   #162032;
+  --text-primary:  #e8f0fe;
+  --text-secondary:#94a3b8;
+  --text-muted:    #64748b;
+  --border:        rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.13);
+  --card-bg:       #1e293b;
+  --shadow:        0 2px 16px rgba(0,0,0,0.35);
+  --input-bg:      #1e293b;
+}
+
+/* ── Apply globally ── */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+/* ── Global dark mode overrides ── */
+[data-theme="dark"] body {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+/* Cards / white boxes */
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] [class*="bg-white"] {
+  background-color: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+
+/* Gray backgrounds */
+[data-theme="dark"] .bg-gray-50,
+[data-theme="dark"] .bg-gray-100 {
+  background-color: #162032 !important;
+}
+
+/* Text colors */
+[data-theme="dark"] .text-gray-600,
+[data-theme="dark"] .text-gray-700,
+[data-theme="dark"] .text-gray-800 {
+  color: #94a3b8 !important;
+}
+[data-theme="dark"] .text-gray-900,
+[data-theme="dark"] .text-black {
+  color: #e2e8f0 !important;
+}
+
+/* Borders */
+[data-theme="dark"] .border,
+[data-theme="dark"] [class*="border-gray"] {
+  border-color: rgba(255,255,255,0.1) !important;
+}
+
+/* Inputs */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background-color: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: rgba(255,255,255,0.12) !important;
+}
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: #64748b !important;
+}
+
+/* Buttons - keep primary buttons as-is, soften others */
+[data-theme="dark"] button:not([class*="bg-"]) {
+  color: #e2e8f0;
 }

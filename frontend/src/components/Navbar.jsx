@@ -4,6 +4,10 @@ import { useState, useEffect, useRef } from 'react';
 import { assets } from '../assets/assets/assets';
 import { useContext } from 'react';
 import { AppContext } from '../context/AppContext.jsx';
+import { useTheme } from '../context/ThemeContext';
+
+
+
 
 function Navbar() {
   const navigate = useNavigate();
@@ -12,7 +16,9 @@ function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-
+  const { theme, toggleTheme } = useTheme();
+  
+  
   const logout = () => {
     setToken(false);
     localStorage.removeItem("token");
@@ -308,106 +314,72 @@ function Navbar() {
 
         .pn-chevron.open { transform: rotate(180deg); }
 
-        /* Dropdown */
-        .pn-dropdown {
-          position: absolute;
-          top: calc(100% + 12px);
-          right: 0;
-          background: var(--surface);
-          border: 1px solid var(--border-strong);
-          border-radius: 14px;
-          padding: 8px;
-          min-width: 220px;
-          box-shadow: var(--shadow-lifted), 0 0 0 1px rgba(12,31,61,0.03);
-          opacity: 0;
-          pointer-events: none;
-          transform: translateY(-8px) scale(0.97);
-          transform-origin: top right;
-          transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
-        }
+        /* ─── Dropdown ─── */
+.pn-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 264px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(12,31,61,0.10), 0 2px 6px rgba(12,31,61,0.05);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px) scale(0.98);
+  transform-origin: top right;
+  transition: opacity 0.18s ease, transform 0.2s cubic-bezier(0.34,1.4,0.64,1);
+}
+.pn-dropdown.open { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
 
-        .pn-dropdown.open {
-          opacity: 1;
-          pointer-events: all;
-          transform: translateY(0) scale(1);
-        }
+.pn-dd-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 14px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.pn-dd-avatar { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-light); flex-shrink: 0; }
+.pn-dd-uname { font-size: 13.5px; font-weight: 700; color: var(--text-primary); line-height: 1.2; }
+.pn-dd-role { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; display: flex; align-items: center; gap: 4px; }
+.pn-dd-badge { background: #d1fae5; color: #065f46; font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 20px; }
 
-        /* Dropdown header */
-        .pn-dd-header {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          padding: 10px 12px 12px;
-          border-bottom: 1px solid var(--border);
-          margin-bottom: 6px;
-        }
+.pn-dd-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); padding: 10px 14px 4px; }
+.pn-dd-group { padding: 4px 6px; }
 
-        .pn-dd-avatar {
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          object-fit: cover;
-          border: 2px solid var(--accent-light);
-          flex-shrink: 0;
-        }
+.pn-dd-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 10px; border-radius: 9px;
+  font-size: 13px; font-weight: 400;
+  color: var(--text-secondary); cursor: pointer;
+  transition: background 0.13s, color 0.13s;
+}
+.pn-dd-item:hover { background: var(--surface-2); color: var(--text-primary); }
 
-        .pn-dd-uname {
-          font-size: 13.5px;
-          font-weight: 700;
-          color: var(--text-primary);
-          line-height: 1.2;
-        }
+.pn-dd-icon {
+  width: 28px; height: 28px; border-radius: 7px;
+  border: 1px solid var(--border); background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0;
+}
+.pn-dd-item-text { flex: 1; }
+.pn-dd-item-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+.pn-dd-arrow { width: 14px; height: 14px; color: var(--text-muted); opacity: 0; transform: translateX(-3px); transition: opacity 0.13s, transform 0.13s; }
+.pn-dd-item:hover .pn-dd-arrow { opacity: 1; transform: translateX(0); }
 
-        .pn-dd-role {
-          font-size: 11.5px;
-          color: var(--text-muted);
-          margin-top: 2px;
-          font-weight: 400;
-        }
+.pn-dd-sep { height: 1px; background: var(--border); margin: 4px 14px; }
 
-        .pn-dd-item {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          padding: 9px 12px;
-          border-radius: 9px;
-          font-size: 13.5px;
-          font-weight: 500;
-          color: var(--text-secondary);
-          cursor: pointer;
-          transition: background 0.13s, color 0.13s;
-          user-select: none;
-        }
+/* Theme row */
+.pn-dd-theme-row { display: flex; align-items: center; justify-content: space-between; padding: 6px 10px 4px; }
+.pn-dd-theme-label { font-size: 12px; color: var(--text-muted); }
+.pn-theme-toggle { display: flex; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 2px; gap: 2px; }
+.pn-theme-btn-seg { width: 26px; height: 24px; border-radius: 6px; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: background 0.15s, color 0.15s; }
+.pn-theme-btn-seg.active { background: var(--surface); color: var(--text-primary); box-shadow: 0 1px 3px rgba(12,31,61,0.10); }
 
-        .pn-dd-item:hover {
-          background: var(--surface-2);
-          color: var(--text-primary);
-        }
-
-        .pn-dd-icon {
-          width: 30px;
-          height: 30px;
-          border-radius: 8px;
-          background: var(--surface-2);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 14px;
-          flex-shrink: 0;
-          transition: background 0.13s;
-        }
-
-        .pn-dd-item:hover .pn-dd-icon { background: #edf2ff; }
-
-        .pn-dd-sep {
-          height: 1px;
-          background: var(--border);
-          margin: 6px 4px;
-        }
-
-        .pn-dd-item.logout { color: #dc2626; }
-        .pn-dd-item.logout:hover { background: #fff1f1; color: #b91c1c; }
-        .pn-dd-item.logout:hover .pn-dd-icon { background: #fee2e2; }
+/* Logout */
+.pn-dd-foot { padding: 6px 6px 8px; }
+.pn-dd-item.logout { color: #dc2626; }
+.pn-dd-item.logout:hover { background: #fff1f1; }
+.pn-dd-item.logout .pn-dd-icon { background: #fff1f1; border-color: #fca5a5; }
 
         /* ─── Hamburger ─── */
         .pn-burger {
@@ -682,6 +654,46 @@ function Navbar() {
         @media (max-width: 480px) {
           .pn-inner { padding: 0 18px; }
         }
+          /* ── Theme toggle button ── */
+.pn-theme-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.pn-theme-btn:hover {
+  background: var(--surface-2);
+  color: var(--brand);
+  border-color: #b0c4de;
+  transform: rotate(12deg);
+}
+
+/* ── Dark mode overrides for navbar ── */
+[data-theme="dark"] .pn {
+  background: rgba(15, 23, 42, 0.92);
+  border-color: rgba(255,255,255,0.08);
+}
+[data-theme="dark"] .pn-cta       { background: #1e40af; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+[data-theme="dark"] .pn-cta:hover { background: #1d4ed8; }
+[data-theme="dark"] .pn-user-btn  { background: #1e293b; border-color: rgba(255,255,255,0.13); }
+[data-theme="dark"] .pn-dropdown  { background: #1e293b; border-color: rgba(255,255,255,0.10); }
+[data-theme="dark"] .pn-dd-item:hover { background: #273549; }
+[data-theme="dark"] .pn-drawer    { background: #0f172a; }
+[data-theme="dark"] .pn-drawer-head { border-color: rgba(255,255,255,0.08); }
+[data-theme="dark"] .pn-drawer-user-card { background: #1e293b; border-color: rgba(255,255,255,0.08); }
+[data-theme="dark"] .pn-drawer-link:hover,
+[data-theme="dark"] .pn-drawer-link.active { background: #1e293b; }
+[data-theme="dark"] .pn-link:hover,
+[data-theme="dark"] .pn-link.active { background: rgba(255,255,255,0.06); color: #e8f0fe; }
+[data-theme="dark"] .pn-theme-btn { background: #1e293b; border-color: rgba(255,255,255,0.13); color: #94a3b8; }
       `}</style>
 
       <nav className={`pn${scrolled ? ' scrolled' : ''}`}>
@@ -743,6 +755,27 @@ function Navbar() {
                   <div className="pn-dd-item" onClick={() => { navigate("my-prescription"); setDropdownOpen(false); }}>
                     <span className="pn-dd-icon">℞</span> My Prescriptions
                   </div>
+                  {/* Theme Toggle */}
+                  <button
+                    className="pn-theme-btn"
+                    onClick={toggleTheme}
+                    aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+                    title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+                  >
+                    {theme === 'light' ? (
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" />
+                        <line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                      </svg>
+                    )}
+                  </button>
                   <div className="pn-dd-sep" />
                   <div className="pn-dd-item logout" onClick={logout}>
                     <span className="pn-dd-icon">🚪</span> Sign Out
