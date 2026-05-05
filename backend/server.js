@@ -11,7 +11,7 @@ import doctorRoute from "./routes/doctor.route.js";
 import userRouter from "./routes/user.route.js";
 import prescriptionRouter from "./routes/prescription.route.js";
 import Route from "./routes/ai.route.js";
-
+import reportRouter from "./routes/report.route.js";
 
 //app config
 const app =express()
@@ -32,6 +32,7 @@ app.use("/api/doctor",doctorRoute)
 app.use("/api/user",userRouter)
 app.use("/api/ai", Route);
 app.use("/api/prescription", prescriptionRouter);
+app.use("/api/report", reportRouter);
 
 app.get('/',(req,res)=>{
     res.send("hello")
