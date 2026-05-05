@@ -1,13 +1,19 @@
 import logo from "../assets/assets/logo_true_carw.png"
 
 function Fotter() {
-    return ( 
+    return (
         <div className="md:mx-10">
             <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-40 text-sm">
                 {/* {left section} */}
                 <div>
-                    <img className="mb-5 w-40" src={logo} alt="" />
-                    <p className="w-full md:w-2/3 text-gray-600 leading-6">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor  sunt<br /> repellendus fugiat facilis  voluptatem commodi similique, tempora <br />consequatur  aut laudantium. </p>
+                    <img className="mb-5 w-40" src={logo} alt="TrueCare Logo" />
+
+                    <p className="w-full md:w-2/3 text-gray-600 leading-6">
+                        TrueCare simplifies your healthcare journey by connecting you with trusted doctors
+                        in just a few clicks. Book appointments instantly, manage your consultations, and
+                        securely store your medical reports in one place — so you never lose important
+                        health records again. Your health, our priority.
+                    </p>
                 </div>
 
                 {/* center section  */}
@@ -38,7 +44,7 @@ function Fotter() {
             </div>
 
         </div>
-     );
+    );
 }
 
 export default Fotter;
