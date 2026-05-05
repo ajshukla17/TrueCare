@@ -13,7 +13,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import AskAI from './components/AskAI'
 import MyPrescriptions from './components/MyPrescriptions'
 import { ThemeProvider } from './context/ThemeContext';
-
+import MyReports from './pages/MyReport'
 function App() {
 
 
@@ -35,6 +35,7 @@ function App() {
             <Route path='/my-appointment' element={<MyAppointment />} />
             <Route path="/ask-ai" element={<AskAI />} />
             <Route path="/my-prescription" element={<MyPrescriptions />} />
+            <Route path='/my-reports' element={<MyReports />} />
           </Routes>
           <Fotter />
 

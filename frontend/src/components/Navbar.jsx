@@ -755,6 +755,10 @@ function Navbar() {
                   <div className="pn-dd-item" onClick={() => { navigate("my-prescription"); setDropdownOpen(false); }}>
                     <span className="pn-dd-icon">℞</span> My Prescriptions
                   </div>
+                  {/* ── My Reports ── */}
+                  <div className="pn-dd-item" onClick={() => { navigate("my-reports"); setDropdownOpen(false); }}>
+                    <span className="pn-dd-icon">🗂️</span> My Reports
+                  </div>
                   {/* Theme Toggle */}
                   <button
                     className="pn-theme-btn"
@@ -841,6 +845,10 @@ function Navbar() {
               </NavLink>
               <NavLink className="pn-drawer-link" to="/my-prescription" onClick={() => setShowMenu(false)}>
                 <span className="pn-drawer-link-icon">℞</span> My Prescriptions
+              </NavLink>
+              {/* ── My Reports ── */}
+              <NavLink className="pn-drawer-link" to="/my-reports" onClick={() => setShowMenu(false)}>
+                <span className="pn-drawer-link-icon">🗂️</span> My Reports
               </NavLink>
             </>
           )}

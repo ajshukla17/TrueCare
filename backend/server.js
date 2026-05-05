@@ -32,6 +32,7 @@ app.use("/api/doctor",doctorRoute)
 app.use("/api/user",userRouter)
 app.use("/api/ai", Route);
 app.use("/api/prescription", prescriptionRouter);
+
 app.get('/',(req,res)=>{
     res.send("hello")
 })
