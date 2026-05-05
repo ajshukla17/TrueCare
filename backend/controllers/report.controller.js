@@ -4,7 +4,7 @@ import { v2 as cloudinary } from "cloudinary";
 // Upload a new report
 const uploadReport = async (req, res) => {
   try {
-    const userId = req.userId; // set by authUser middleware
+    const userId = req.user?.id; // set by authUser middleware
     const { title, reportType, description, doctorName, reportDate } = req.body;
 
     if (!req.file) {
@@ -44,7 +44,7 @@ const uploadReport = async (req, res) => {
 // Get all reports for logged-in patient
 const getMyReports = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user?.id;
     const reports = await reportModel.find({ patientId: userId }).sort({ createdAt: -1 });
     res.json({ success: true, reports });
   } catch (error) {
@@ -56,7 +56,7 @@ const getMyReports = async (req, res) => {
 // Delete a report
 const deleteReport = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user?.id;
     const { reportId } = req.body;
 
     const report = await reportModel.findOne({ _id: reportId, patientId: userId });
