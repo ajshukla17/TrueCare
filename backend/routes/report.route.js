@@ -5,13 +5,12 @@ import upload from "../middleware/multer.js";
 
 const reportRouter = express.Router();
 
-// Upload a new report (multipart/form-data with file)
-reportRouter.post("/upload", upload.single("reportFile"), authUser, uploadReport);
 
-// Get all reports for the logged-in patient
+reportRouter.post("/upload", authUser, upload.single("reportFile"), uploadReport);
+
 reportRouter.get("/my-reports", authUser, getMyReports);
 
-// Delete a report
+// Delete report
 reportRouter.post("/delete", authUser, deleteReport);
 
 export default reportRouter;
