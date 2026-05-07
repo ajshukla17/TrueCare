@@ -427,6 +427,8 @@ const verifyRazorpay = async (req, res) => {
             );
 
             console.log("Email sent");
+            console.log("Sending email to:", user.email);
+            console.log("User object:", user);
         } catch (mailError) {
             console.log(
                 "MAIL ERROR:",
