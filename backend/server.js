@@ -1,6 +1,3 @@
-
-
-
 import express from "express"
 import cors from "cors"
 
@@ -35,7 +32,7 @@ app.use("/api/prescription", prescriptionRouter);
 app.use("/api/report", reportRouter);
 
 app.get('/',(req,res)=>{
-    res.send("hello")
+    res.send("hello users")
 })
 
 

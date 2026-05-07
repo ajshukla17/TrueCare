@@ -26,7 +26,7 @@ function Fotter() {
                         <li>Privacy Policy</li>
                     </ul>
 
-                </div>
+                </div>  
 
                 {/* rigth section */}
                 <div>
