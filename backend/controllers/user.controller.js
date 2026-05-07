@@ -327,7 +327,7 @@ const paymentRazorpay = async (req, res) => {
         };
 
         const order = await razorpayInstance.orders.create(options);
-
+        console.log("🔥 verifyRazorpay API HIT");
         return res.json({
             success: true,
             order,
